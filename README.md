@@ -13,7 +13,9 @@ HackMate is a complete, feature-rich hackathon management system designed to str
 
 ## Open it in private tab as it is a subdomain
  Live Link: [https://hackmate.ct.ws/](https://hackmate.ct.ws/)
+ 
  Admin Pannel Credentials
+ 
  Email: admin@hackathon.com
  Password: password
 
