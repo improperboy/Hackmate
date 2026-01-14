@@ -11,6 +11,10 @@ HackMate is a complete, feature-rich hackathon management system designed to str
 - [Configuration](#-configuration-options)
 - [Troubleshooting](#-troubleshooting)
 
+## Open it in private tab as it is a subdomain
+ [Live Link](#-https://hackmate.ct.ws/)
+
+
 ## 🛠️ Installation Guide
 
 ### Prerequisites
