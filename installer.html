@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Installation Test - HackMate</title>
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="background-color" content="#4F46E5">
+    
+    <!-- iOS PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="HackMate">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+    
+    <!-- Android PWA Support -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="HackMate">
+    
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-xl p-8 mb-8">
+            <div class="text-center mb-8">
+                <div class="mx-auto h-16 w-16 bg-indigo-600 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-mobile-alt text-white text-2xl"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">PWA Installation Test</h1>
+                <p class="text-gray-600">Test PWA installation capabilities on your device</p>
+            </div>
+
+            <!-- Installation Status -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                        <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                        Device Information
+                    </h2>
+                    <div class="space-y-2 text-sm">
+                        <div><strong>User Agent:</strong> <span id="user-agent" class="break-all"></span></div>
+                        <div><strong>Platform:</strong> <span id="platform"></span></div>
+                        <div><strong>Is Mobile:</strong> <span id="is-mobile"></span></div>
+                        <div><strong>Is Android:</strong> <span id="is-android"></span></div>
+                        <div><strong>Is Chrome:</strong> <span id="is-chrome"></span></div>
+                        <div><strong>Is Safari:</strong> <span id="is-safari"></span></div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                        <i class="fas fa-cog text-green-600 mr-2"></i>
+                        PWA Support
+                    </h2>
+                    <div class="space-y-2 text-sm">
+                        <div><strong>Service Worker:</strong> <span id="sw-support"></span></div>
+                        <div><strong>Manifest:</strong> <span id="manifest-support"></span></div>
+                        <div><strong>Install Prompt:</strong> <span id="install-prompt"></span></div>
+                        <div><strong>Already Installed:</strong> <span id="already-installed"></span></div>
+                        <div><strong>Standalone Mode:</strong> <span id="standalone-mode"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manual Install Button -->
+            <div class="text-center mb-8">
+                <button id="manual-install" 
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i class="fas fa-download mr-2"></i>
+                    Try Manual Install
+                </button>
+                <p class="text-sm text-gray-600 mt-2">Click to trigger installation prompt</p>
+            </div>
+
+            <!-- Installation Instructions -->
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-8">
+                <h3 class="text-lg font-semibold text-yellow-800 mb-3">
+                    <i class="fas fa-lightbulb text-yellow-600 mr-2"></i>
+                    Installation Instructions
+                </h3>
+                
+                <div class="space-y-4">
+                    <!-- Android Chrome -->
+                    <div class="border-l-4 border-green-400 pl-4">
+                        <h4 class="font-medium text-gray-900">Android Chrome/Edge:</h4>
+                        <ol class="list-decimal list-inside text-sm text-gray-700 mt-1 space-y-1">
+                            <li>Tap the menu (⋮) in the top-right corner</li>
+                            <li>Look for "Add to Home screen" or "Install app"</li>
+                            <li>Tap "Add" or "Install"</li>
+                            <li>The app icon will appear on your home screen</li>
+                        </ol>
+                    </div>
+
+                    <!-- Android Samsung Internet -->
+                    <div class="border-l-4 border-blue-400 pl-4">
+                        <h4 class="font-medium text-gray-900">Samsung Internet:</h4>
+                        <ol class="list-decimal list-inside text-sm text-gray-700 mt-1 space-y-1">
+                            <li>Tap the menu (≡) at the bottom</li>
+                            <li>Select "Add page to" → "Home screen"</li>
+                            <li>Confirm installation</li>
+                        </ol>
+                    </div>
+
+                    <!-- iOS Safari -->
+                    <div class="border-l-4 border-purple-400 pl-4">
+                        <h4 class="font-medium text-gray-900">iOS Safari:</h4>
+                        <ol class="list-decimal list-inside text-sm text-gray-700 mt-1 space-y-1">
+                            <li>Tap the Share button (⇪) at the bottom</li>
+                            <li>Scroll down and tap "Add to Home Screen"</li>
+                            <li>Tap "Add" to confirm</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Requirements Check -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-blue-800 mb-3">
+                    <i class="fas fa-check-circle text-blue-600 mr-2"></i>
+                    PWA Requirements Status
+                </h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <span id="req-https" class="w-4 h-4 mr-2"></span>
+                            <span class="text-sm">HTTPS/Localhost</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span id="req-manifest" class="w-4 h-4 mr-2"></span>
+                            <span class="text-sm">Web Manifest</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span id="req-sw" class="w-4 h-4 mr-2"></span>
+                            <span class="text-sm">Service Worker</span>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <span id="req-icons" class="w-4 h-4 mr-2"></span>
+                            <span class="text-sm">Icons (192px, 512px)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span id="req-display" class="w-4 h-4 mr-2"></span>
+                            <span class="text-sm">Display Mode</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span id="req-start-url" class="w-4 h-4 mr-2"></span>
+                            <span class="text-sm">Start URL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Console Log -->
+        <div class="bg-gray-900 text-green-400 rounded-lg p-4 font-mono text-sm">
+            <div class="flex items-center mb-2">
+                <i class="fas fa-terminal mr-2"></i>
+                <span class="font-semibold">Console Output</span>
+                <button id="clear-log" class="ml-auto text-gray-400 hover:text-white">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            <div id="console-log" class="max-h-40 overflow-y-auto space-y-1">
+                <div class="text-gray-400">Ready to test PWA installation...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA Scripts -->
+    <script src="/assets/js/pwa.js"></script>
+    <script>
+        let deferredPrompt = null;
+        
+        // Log function
+        function log(message, type = 'info') {
+            const logContainer = document.getElementById('console-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                info: 'text-green-400',
+                warn: 'text-yellow-400',
+                error: 'text-red-400',
+                success: 'text-blue-400'
+            };
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = `${colors[type] || colors.info} fade-in`;
+            logEntry.innerHTML = `<span class="text-gray-500">[${timestamp}]</span> ${message}`;
+            
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // Check mark or X mark
+        function setStatus(elementId, status) {
+            const element = document.getElementById(elementId);
+            if (status) {
+                element.innerHTML = '<i class="fas fa-check text-green-600"></i>';
+            } else {
+                element.innerHTML = '<i class="fas fa-times text-red-600"></i>';
+            }
+        }
+
+        // Detect device and browser
+        function detectDevice() {
+            const ua = navigator.userAgent;
+            document.getElementById('user-agent').textContent = ua;
+            document.getElementById('platform').textContent = navigator.platform;
+            
+            const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+            const isAndroid = /Android/i.test(ua);
+            const isChrome = /Chrome/i.test(ua) && !/Edg/i.test(ua);
+            const isSafari = /Safari/i.test(ua) && !/Chrome/i.test(ua);
+            
+            document.getElementById('is-mobile').textContent = isMobile ? 'Yes' : 'No';
+            document.getElementById('is-android').textContent = isAndroid ? 'Yes' : 'No';
+            document.getElementById('is-chrome').textContent = isChrome ? 'Yes' : 'No';
+            document.getElementById('is-safari').textContent = isSafari ? 'Yes' : 'No';
+            
+            log(`Device detected: ${isMobile ? 'Mobile' : 'Desktop'}, ${isAndroid ? 'Android' : 'Other OS'}`);
+        }
+
+        // Check PWA support
+        function checkPWASupport() {
+            const swSupport = 'serviceWorker' in navigator;
+            const manifestSupport = 'serviceWorker' in navigator; // Simplified check
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                                window.navigator.standalone === true;
+            
+            document.getElementById('sw-support').textContent = swSupport ? 'Yes' : 'No';
+            document.getElementById('manifest-support').textContent = manifestSupport ? 'Yes' : 'No';
+            document.getElementById('install-prompt').textContent = deferredPrompt ? 'Available' : 'Not Available';
+            document.getElementById('already-installed').textContent = isStandalone ? 'Yes' : 'No';
+            document.getElementById('standalone-mode').textContent = isStandalone ? 'Yes' : 'No';
+            
+            log(`PWA Support - SW: ${swSupport}, Standalone: ${isStandalone}`);
+        }
+
+        // Check PWA requirements
+        async function checkRequirements() {
+            // HTTPS/Localhost
+            const isSecure = location.protocol === 'https:' || location.hostname === 'localhost';
+            setStatus('req-https', isSecure);
+            
+            // Service Worker
+            const hasServiceWorker = 'serviceWorker' in navigator;
+            setStatus('req-sw', hasServiceWorker);
+            
+            // Manifest
+            try {
+                const response = await fetch('/manifest.json');
+                const manifest = await response.json();
+                
+                setStatus('req-manifest', true);
+                setStatus('req-display', manifest.display === 'standalone');
+                setStatus('req-start-url', !!manifest.start_url);
+                
+                // Check icons
+                const hasRequiredIcons = manifest.icons && 
+                    manifest.icons.some(icon => icon.sizes === '192x192') &&
+                    manifest.icons.some(icon => icon.sizes === '512x512');
+                setStatus('req-icons', hasRequiredIcons);
+                
+                log('Manifest loaded successfully', 'success');
+            } catch (error) {
+                setStatus('req-manifest', false);
+                setStatus('req-display', false);
+                setStatus('req-start-url', false);
+                setStatus('req-icons', false);
+                log(`Manifest error: ${error.message}`, 'error');
+            }
+        }
+
+        // Install prompt event
+        window.addEventListener('beforeinstallprompt', (e) => {
+            log('beforeinstallprompt event fired!', 'success');
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('install-prompt').textContent = 'Available';
+            document.getElementById('manual-install').disabled = false;
+        });
+
+        // App installed event
+        window.addEventListener('appinstalled', () => {
+            log('App was installed successfully!', 'success');
+            deferredPrompt = null;
+            document.getElementById('already-installed').textContent = 'Yes';
+            document.getElementById('manual-install').disabled = true;
+        });
+
+        // Manual install button
+        document.getElementById('manual-install').addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                log('No install prompt available. Try the manual method above.', 'warn');
+                return;
+            }
+
+            try {
+                log('Showing install prompt...', 'info');
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                log(`User response: ${outcome}`, outcome === 'accepted' ? 'success' : 'warn');
+                deferredPrompt = null;
+            } catch (error) {
+                log(`Install error: ${error.message}`, 'error');
+            }
+        });
+
+        // Clear log button
+        document.getElementById('clear-log').addEventListener('click', () => {
+            document.getElementById('console-log').innerHTML = '<div class="text-gray-400">Log cleared...</div>';
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            detectDevice();
+            checkPWASupport();
+            checkRequirements();
+            
+            // Initial install button state
+            document.getElementById('manual-install').disabled = !deferredPrompt;
+            
+            log('PWA test page initialized', 'success');
+        });
+    </script>
+</body>
+</html>

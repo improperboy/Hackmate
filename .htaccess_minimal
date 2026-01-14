@@ -1,0 +1,31 @@
+# Minimal .htaccess for InfinityFree hosting
+# Use this if the main .htaccess causes 500 errors
+
+# Enable URL rewriting
+RewriteEngine On
+
+# Security: Protect sensitive files
+<Files ~ "\.(sql|env|log|ini|bak|config)$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Protect includes directory  
+<Files "includes/*">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevent access to hidden files
+<Files ~ "^\.">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Directory browsing protection
+Options -Indexes
+
+# Basic PHP settings (if supported)
+<IfModule mod_php.c>
+    php_flag display_errors Off
+</IfModule>

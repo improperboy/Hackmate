@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - HackMate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4F46E5">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="HackMate">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+    
+    <style>
+        .offline-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 2s infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(.33);
+                opacity: 1;
+            }
+            80%, 100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 text-center">
+            <!-- Offline Icon -->
+            <div class="relative mx-auto h-32 w-32 flex items-center justify-center">
+                <div class="absolute inset-0 bg-red-200 rounded-full pulse-ring"></div>
+                <div class="relative bg-red-500 rounded-full h-20 w-20 flex items-center justify-center offline-animation">
+                    <i class="fas fa-wifi-slash text-white text-2xl"></i>
+                </div>
+            </div>
+
+            <!-- Title -->
+            <div>
+                <h1 class="text-3xl font-extrabold text-gray-900 mb-2">
+                    You're Offline
+                </h1>
+                <p class="text-gray-600 mb-8">
+                    No internet connection detected. Some features may be limited.
+                </p>
+            </div>
+
+            <!-- Status Card -->
+            <div class="bg-white rounded-lg shadow-xl p-6 space-y-6">
+                <div class="flex items-center justify-center space-x-3 text-red-600">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-triangle text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium">Connection Lost</h3>
+                        <p class="text-sm text-gray-600">
+                            Check your internet connection and try again
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Connection Status -->
+                <div class="border-t pt-4">
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-600">Status:</span>
+                        <span id="connection-status" class="text-red-600 font-medium">
+                            <i class="fas fa-times mr-1"></i>
+                            Offline
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm mt-2">
+                        <span class="text-gray-600">Last Updated:</span>
+                        <span id="last-updated" class="text-gray-800 font-medium">
+                            Just now
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="space-y-3">
+                    <button id="retry-btn" 
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                        <i class="fas fa-sync-alt mr-2"></i>
+                        Try Again
+                    </button>
+                    
+                    <button id="cached-content-btn"
+                            class="w-full flex justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                        <i class="fas fa-archive mr-2"></i>
+                        View Cached Content
+                    </button>
+                </div>
+            </div>
+
+            <!-- Available Features -->
+            <div class="bg-white rounded-lg shadow-xl p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">
+                    <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                    Available Offline
+                </h3>
+                <div class="grid grid-cols-1 gap-3 text-sm">
+                    <div class="flex items-center text-gray-700">
+                        <i class="fas fa-eye text-indigo-600 mr-3 w-4"></i>
+                        View previously loaded pages
+                    </div>
+                    <div class="flex items-center text-gray-700">
+                        <i class="fas fa-edit text-indigo-600 mr-3 w-4"></i>
+                        Draft form submissions (will sync when online)
+                    </div>
+                    <div class="flex items-center text-gray-700">
+                        <i class="fas fa-download text-indigo-600 mr-3 w-4"></i>
+                        Access cached resources
+                    </div>
+                    <div class="flex items-center text-gray-700">
+                        <i class="fas fa-mobile-alt text-indigo-600 mr-3 w-4"></i>
+                        Full PWA functionality
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-info-circle text-blue-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-blue-800">
+                            Offline Tips
+                        </h3>
+                        <div class="mt-2 text-sm text-blue-700">
+                            <ul class="list-disc space-y-1 ml-5">
+                                <li>Your form data will be saved and submitted when you're back online</li>
+                                <li>Previously visited pages are still available</li>
+                                <li>The app will automatically reconnect when internet is restored</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center">
+                <p class="text-sm text-gray-500">
+                    © 2024 HackMate. PWA Mode Active.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connection Status Toast -->
+    <div id="connection-toast" class="hidden fixed top-4 right-4 z-50 px-4 py-2 rounded-lg shadow-lg text-white text-sm transition-all duration-300"></div>
+
+    <script>
+        // Connection monitoring
+        function updateConnectionStatus() {
+            const isOnline = navigator.onLine;
+            const statusElement = document.getElementById('connection-status');
+            const lastUpdatedElement = document.getElementById('last-updated');
+            const toast = document.getElementById('connection-toast');
+            
+            if (isOnline) {
+                statusElement.innerHTML = '<i class="fas fa-check mr-1"></i>Online';
+                statusElement.className = 'text-green-600 font-medium';
+                
+                // Show reconnection toast
+                toast.innerHTML = '<i class="fas fa-wifi mr-2"></i>Connection restored!';
+                toast.className = 'fixed top-4 right-4 z-50 px-4 py-2 rounded-lg shadow-lg text-white text-sm transition-all duration-300 bg-green-600';
+                toast.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    // Redirect to main page after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                }, 3000);
+            } else {
+                statusElement.innerHTML = '<i class="fas fa-times mr-1"></i>Offline';
+                statusElement.className = 'text-red-600 font-medium';
+            }
+            
+            lastUpdatedElement.textContent = new Date().toLocaleTimeString();
+        }
+
+        // Event listeners
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+
+        // Retry button
+        document.getElementById('retry-btn').addEventListener('click', () => {
+            if (navigator.onLine) {
+                window.location.href = '/';
+            } else {
+                // Show offline message
+                const toast = document.getElementById('connection-toast');
+                toast.innerHTML = '<i class="fas fa-wifi-slash mr-2"></i>Still offline';
+                toast.className = 'fixed top-4 right-4 z-50 px-4 py-2 rounded-lg shadow-lg text-white text-sm transition-all duration-300 bg-red-600';
+                toast.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 3000);
+            }
+        });
+
+        // Cached content button
+        document.getElementById('cached-content-btn').addEventListener('click', async () => {
+            if ('caches' in window) {
+                try {
+                    const cacheNames = await caches.keys();
+                    if (cacheNames.length > 0) {
+                        const cache = await caches.open(cacheNames[0]);
+                        const requests = await cache.keys();
+                        
+                        // Try to find a cached page to show
+                        for (const request of requests) {
+                            if (request.url.includes('.php') || request.url.endsWith('/')) {
+                                window.location.href = request.url;
+                                return;
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error accessing cache:', error);
+                }
+            }
+            
+            // Fallback: show message
+            const toast = document.getElementById('connection-toast');
+            toast.innerHTML = '<i class="fas fa-info mr-2"></i>No cached content available';
+            toast.className = 'fixed top-4 right-4 z-50 px-4 py-2 rounded-lg shadow-lg text-white text-sm transition-all duration-300 bg-blue-600';
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        });
+
+        // Initial status update
+        updateConnectionStatus();
+        
+        // Auto-refresh every 30 seconds
+        setInterval(updateConnectionStatus, 30000);
+    </script>
+</body>
+</html>

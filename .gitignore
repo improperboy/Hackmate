@@ -1,0 +1,63 @@
+# Database configuration
+includes/db.php
+
+# Composer dependencies
+vendor/
+composer.phar
+
+# Uploads and temporary files
+uploads/*
+tmp/*
+!uploads/.gitkeep
+!tmp/.gitkeep
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Logs
+*.log
+logs/
+error_log
+
+# Sensitive data
+*.sql
+sql/*.sql
+backup/
+*.bak
+
+# Node modules and build files
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.next/
+out/
+build/
+dist/
+
+# Cache files
+*.cache
+.cache/
+.sass-cache/
+
+# Temporary files
+*.tmp
+*.temp
+~*
