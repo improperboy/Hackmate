@@ -4,17 +4,23 @@ includes/db.php
 # Composer dependencies
 vendor/
 composer.phar
+composer.lock
 
 # Uploads and temporary files
 uploads/*
-tmp/*
 !uploads/.gitkeep
+!uploads/certificate_templates/.gitkeep
+!uploads/certificates/.gitkeep
+tmp/*
+tmp/sessions/*
 !tmp/.gitkeep
+!tmp/sessions/.gitkeep
 
 # Environment files
 .env
 .env.local
 .env.*.local
+.env.production
 
 # IDE files
 .vscode/
@@ -24,40 +30,102 @@ tmp/*
 *~
 *.sublime-project
 *.sublime-workspace
+.project
+.settings/
+.buildpath
 
 # OS files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
 Thumbs.db
+Thumbs.db:encryptable
 desktop.ini
 ehthumbs.db
+ehthumbs_vista.db
 
 # Logs
 *.log
 logs/
 error_log
+debug.log
+php_errors.log
 
 # Sensitive data
 *.sql
 sql/*.sql
+!sql/hackmate_schema.sql
 backup/
+backups/
 *.bak
+*.backup
+*.dump
 
 # Node modules and build files
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 .next/
 out/
 build/
 dist/
+.nuxt/
+.cache/
 
 # Cache files
 *.cache
-.cache/
 .sass-cache/
+.parcel-cache/
 
 # Temporary files
 *.tmp
 *.temp
 ~*
+*.swp
+*.swo
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Generated files
+*.min.js
+*.min.css
+*.map
+
+# Documentation setup files (keep in repo but ignore if modified)
+GITHUB_SETUP.md
+SETUP_COMPLETE.md
+
+# Test files
+phpunit.xml
+.phpunit.result.cache
+tests/_output/*
+coverage/
+
+# Security
+.htpasswd
+*.pem
+*.key
+*.crt
+*.csr
+ssl/
+
+# API Keys and Secrets
+config/secrets.php
+api_keys.php
+
+# Session files
+sess_*
+
+# QR codes (generated)
+QR!.png
+
+# Certificate files (generated)
+uploads/certificates/*.pdf
+uploads/certificate_templates/*.pdf

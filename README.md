@@ -1,8 +1,206 @@
 # HackMate - Comprehensive Hackathon Management System
 
-
-
 HackMate is a complete, feature-rich hackathon management system designed to streamline the organization and participation in hackathon events. Built with PHP, MySQL, and modern web technologies, it provides a comprehensive platform for administrators, mentors, participants, and volunteers.
+
+## 📋 Table of Contents
+- [Features](#-features)
+- [Folder Structure](#-folder-structure)
+- [Requirements](#-requirements)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Usage Guide](#-usage-guide)
+- [Security](#-security-considerations)
+- [Troubleshooting](#-troubleshooting)
+- [License](#-license)
+
+## 📁 Folder Structure
+
+```
+HackMate/
+├── admin/                          # Admin panel files
+│   ├── add_user.php               # Add new users
+│   ├── ai_mentor_recommendations.php
+│   ├── analytics.php              # System analytics
+│   ├── blockchain_certificates.php
+│   ├── certificate_settings.php
+│   ├── certificate_templates.php
+│   ├── chatbot_analytics.php
+│   ├── dashboard.php              # Admin dashboard
+│   ├── export.php                 # Data export
+│   ├── export_team_pdf.php
+│   ├── floors_rooms.php           # Venue management
+│   ├── generate_certificates.php
+│   ├── github_repositories.php
+│   ├── manage_users.php           # User management
+│   ├── mentor_assignments.php
+│   ├── mentor_recommendations.php
+│   ├── mentoring_rounds.php
+│   ├── migrate_user_skills.php
+│   ├── posts.php                  # Announcements
+│   ├── recent_activity.php
+│   ├── sidebar.php                # Admin navigation
+│   ├── submission_settings.php
+│   ├── support_messages.php
+│   ├── system_settings.php        # System configuration
+│   ├── team_rankings.php
+│   ├── teams.php                  # Team management
+│   ├── themes.php                 # Hackathon themes
+│   ├── view_announcement.php
+│   ├── view_submissions.php
+│   ├── view_support_message.php
+│   └── volunteer_assignments.php
+│
+├── ajax/                          # AJAX endpoints
+│   ├── create_team.php
+│   ├── delete_join_request.php
+│   ├── final_submission.php
+│   ├── get_team_details.php
+│   ├── manage_team_members.php
+│   ├── mentor_assignment.php
+│   ├── score_submit.php
+│   ├── search_users.php
+│   ├── send_invitation.php
+│   ├── send_join_request.php
+│   └── support_message.php
+│
+├── api/                           # API endpoints
+│   ├── chatbot.php               # AI chatbot API
+│   ├── github_checker.php        # GitHub validation
+│   ├── mentor_recommendations.php
+│   └── notifications.php         # Push notifications
+│
+├── assets/                        # Static assets
+│   ├── css/
+│   │   ├── style.css
+│   │   └── tailwind.css
+│   ├── icons/                    # PWA icons
+│   │   ├── apple-touch-icon.png
+│   │   ├── icon-128x128.png
+│   │   ├── icon-144x144.png
+│   │   ├── icon-152x152.png
+│   │   ├── icon-192x192.png
+│   │   ├── icon-384x384.png
+│   │   ├── icon-512x512.png
+│   │   ├── icon-72x72.png
+│   │   ├── icon-96x96.png
+│   │   ├── shortcut-dashboard.png
+│   │   ├── shortcut-submit.png
+│   │   └── shortcut-teams.png
+│   └── js/
+│       ├── main.js
+│       ├── notifications.js
+│       ├── pwa.js
+│       └── security.js
+│
+├── includes/                      # Core includes
+│   ├── announcement_component.php
+│   ├── auth_check.php
+│   ├── auth.php
+│   ├── chatbot_component.php
+│   ├── db.php                    # Database configuration
+│   ├── github_checker_component.php
+│   ├── maintenance_check.php
+│   ├── session_config.php
+│   ├── system_settings.php
+│   └── utils.php
+│
+├── lib/                          # Libraries
+│   ├── BlockchainCertificate.php
+│   └── utils.ts
+│
+├── mentor/                       # Mentor panel
+│   ├── announcements.php
+│   ├── assigned_teams.php
+│   ├── contact_admin.php
+│   ├── dashboard.php
+│   ├── debug_teams.php
+│   ├── mentor_guidelines.php
+│   ├── rankings.php
+│   ├── schedule.php
+│   ├── score_teams.php
+│   ├── scoring_history.php
+│   ├── sidebar.php
+│   ├── support_messages.php
+│   ├── team_progress.php
+│   ├── view_announcement.php
+│   └── view_support_message.php
+│
+├── participant/                  # Participant panel
+│   ├── announcements.php
+│   ├── certificates.php
+│   ├── create_team.php
+│   ├── dashboard.php
+│   ├── join_team.php
+│   ├── manage_requests.php
+│   ├── mentoring_rounds.php
+│   ├── my_join_requests.php
+│   ├── rankings.php
+│   ├── search_users.php
+│   ├── sidebar.php
+│   ├── submit_project.php
+│   ├── support.php
+│   ├── team_actions.php
+│   ├── team_details.php
+│   ├── team_invitations.php
+│   ├── view_announcement.php
+│   └── view_support_message.php
+│
+├── public/                       # Public assets
+│   ├── placeholder-logo.png
+│   ├── placeholder-logo.svg
+│   ├── placeholder-user.jpg
+│   ├── placeholder.jpg
+│   └── placeholder.svg
+│
+├── sql/                          # Database files
+│   ├── hackmate_schema.sql      # Database schema
+│   └── README.md
+│
+├── styles/                       # Additional styles
+│   └── globals.css
+│
+├── templates/                    # Template files
+│   └── default.php
+│
+├── tmp/                          # Temporary files
+│   └── sessions/                # PHP sessions
+│
+├── uploads/                      # User uploads
+│   ├── certificate_templates/   # Certificate PDFs
+│   └── certificates/            # Generated certificates
+│
+├── vendor/                       # Composer dependencies
+│   └── (auto-generated)
+│
+├── .gitignore                   # Git ignore rules
+├── .htaccess                    # Apache configuration
+├── .htaccess_minimal            # Minimal Apache config
+├── announcements.php            # Public announcements
+├── change_password.php          # Password change
+├── composer.json                # PHP dependencies
+├── composer.lock                # Dependency lock file
+├── generate_pdf.php             # PDF generation
+├── github_checker.php           # GitHub validation
+├── index.php                    # Landing page
+├── installer.html               # Installation wizard
+├── login.php                    # Login page
+├── logout.php                   # Logout handler
+├── manifest.json                # PWA manifest
+├── next.config.mjs              # Next.js config
+├── offline.html                 # Offline page
+├── QR.html                      # QR code generator
+├── QR!.png                      # QR code image
+├── README.md                    # This file
+├── register.php                 # Registration page
+├── setup_ai_recommendations.php # AI setup
+├── setup_chatbot.php            # Chatbot setup
+├── splash.php                   # Splash screen
+├── sw.js                        # Service worker
+├── team_rankings.php            # Public rankings
+├── unauthorized.php             # Access denied page
+├── verify_certificate.php       # Certificate verification
+└── view_announcement.php        # View announcements
+```
 
 ## 📋 Table of Contents
 - [Installation Guide](#-installation-guide)
@@ -378,6 +576,259 @@ sudo systemctl reload apache2
 - **Role-Based Access Control**: Granular permissions
 - **Secure File Uploads**: Validation and sanitization
 
+
+## � Requirements
+
+### Server Requirements
+- **PHP**: 7.4 or higher (8.0+ recommended)
+- **MySQL**: 5.7 or higher / MariaDB 10.2+
+- **Apache**: 2.4+ with mod_rewrite enabled
+- **Composer**: Latest version
+- **SSL Certificate**: Required for PWA features
+
+### PHP Extensions Required
+- `mysqli` or `pdo_mysql`
+- `mbstring`
+- `json`
+- `session`
+- `gd` or `imagick` (for image processing)
+- `zip` (for file handling)
+- `curl` (for API calls)
+
+### Recommended Server Configuration
+- **Memory Limit**: 256MB minimum
+- **Upload Max Filesize**: 50MB
+- **Post Max Size**: 50MB
+- **Max Execution Time**: 300 seconds
+- **Session Save Path**: Writable directory
+
+## 🚀 Installation
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/improperboy/hackmate.git
+cd hackmate
+```
+
+### Step 2: Install Dependencies
+
+```bash
+composer install
+```
+
+This will install:
+- `dompdf/dompdf` - PDF generation library
+
+### Step 3: Database Setup
+
+1. **Create a MySQL database:**
+
+```sql
+CREATE DATABASE hackmate CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+2. **Import the database schema:**
+
+```bash
+mysql -u your_username -p hackmate < sql/hackmate_schema.sql
+```
+
+Or use phpMyAdmin to import `sql/hackmate_schema.sql`
+
+### Step 4: Configure Database Connection
+
+1. **Copy the database configuration template:**
+
+```bash
+cp includes/db.php.example includes/db.php
+```
+
+2. **Edit `includes/db.php` with your database credentials:**
+
+```php
+<?php
+$host = 'localhost';
+$dbname = 'hackmate';
+$username = 'your_username';
+$password = 'your_password';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch(PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
+}
+?>
+```
+
+### Step 5: Set Directory Permissions
+
+```bash
+# Linux/Mac
+chmod 755 uploads/
+chmod 755 uploads/certificates/
+chmod 755 uploads/certificate_templates/
+chmod 755 tmp/
+chmod 755 tmp/sessions/
+
+# Windows (Run as Administrator in PowerShell)
+icacls uploads /grant Users:F /T
+icacls tmp /grant Users:F /T
+```
+
+### Step 6: Configure Apache
+
+1. **Enable mod_rewrite:**
+
+```bash
+# Linux
+sudo a2enmod rewrite
+sudo systemctl restart apache2
+
+# The .htaccess file is already included in the project
+```
+
+2. **Ensure AllowOverride is set to All in your Apache configuration:**
+
+```apache
+<Directory /var/www/html/hackmate>
+    AllowOverride All
+    Require all granted
+</Directory>
+```
+
+### Step 7: Configure SSL (Required for PWA)
+
+For production, obtain an SSL certificate:
+- Use Let's Encrypt (free): https://letsencrypt.org/
+- Or use your hosting provider's SSL
+
+For development:
+```bash
+# Generate self-signed certificate (development only)
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /path/to/private.key \
+  -out /path/to/certificate.crt
+```
+
+### Step 8: Initial Setup
+
+1. **Access the installer:**
+   - Navigate to: `https://yourdomain.com/installer.html`
+   - Or manually create the first admin user in the database
+
+2. **Create admin user manually (alternative):**
+
+```sql
+INSERT INTO users (username, email, password, role, created_at) 
+VALUES (
+    'admin',
+    'admin@example.com',
+    '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', -- password: password
+    'admin',
+    NOW()
+);
+```
+
+3. **Login with default credentials:**
+   - Username: `admin`
+   - Password: `password`
+   - **IMPORTANT**: Change the password immediately after first login!
+
+### Step 9: Configure Optional Features
+
+#### AI Chatbot (Google Gemini)
+1. Get API key from: https://makersuite.google.com/app/apikey
+2. Run setup: `https://yourdomain.com/setup_chatbot.php`
+3. Enter your API key
+
+#### AI Mentor Recommendations
+1. Run setup: `https://yourdomain.com/setup_ai_recommendations.php`
+2. Configure matching algorithms
+
+#### Blockchain Certificates
+1. Navigate to: Admin Panel → Blockchain Certificates
+2. Upload certificate templates
+3. Configure certificate settings
+
+### Step 10: System Configuration
+
+1. **Login as admin**
+2. **Navigate to System Settings**
+3. **Configure:**
+   - Event name and description
+   - Event dates
+   - Team size limits (min/max)
+   - Registration settings
+   - Submission deadlines
+   - Notification preferences
+
+### Step 11: Verify Installation
+
+Check that everything is working:
+- ✅ Login page loads
+- ✅ Admin dashboard accessible
+- ✅ Database connection successful
+- ✅ File uploads working
+- ✅ PWA manifest loads
+- ✅ Service worker registers (check browser console)
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+Create a `.env` file (optional, for advanced configuration):
+
+```env
+DB_HOST=localhost
+DB_NAME=hackmate
+DB_USER=your_username
+DB_PASS=your_password
+
+GEMINI_API_KEY=your_api_key_here
+SESSION_LIFETIME=3600
+UPLOAD_MAX_SIZE=52428800
+
+# Email Configuration (optional)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_app_password
+```
+
+### System Settings (via Admin Panel)
+
+After installation, configure these settings in the admin panel:
+
+1. **Event Settings**
+   - Event name
+   - Start/end dates
+   - Registration open/close dates
+   - Submission deadlines
+
+2. **Team Settings**
+   - Minimum team size (default: 1)
+   - Maximum team size (default: 4)
+   - Allow solo participants
+   - Team approval required
+
+3. **Submission Settings**
+   - Required fields
+   - File upload limits
+   - GitHub repository required
+   - Live demo link required
+
+4. **Notification Settings**
+   - Email notifications
+   - Push notifications
+   - Quiet hours
+
+5. **Security Settings**
+   - Session timeout
+   - Password requirements
+   - Two-factor authentication (if enabled)
 
 ## 📖 Usage Guide
 
